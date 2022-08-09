@@ -23,7 +23,7 @@ onMounted(() => {
     camera.position.z = 1000;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x000000, 0.001);
+    scene.fog = new THREE.FogExp2(0x000000, 0.0015);
 
     const geometry = new THREE.BufferGeometry();
     const vertices = [];

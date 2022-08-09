@@ -1,31 +1,111 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from 'vue';
+import * as THREE from 'three';
+
+const stageCanvas = ref<HTMLCanvasElement | THREE.OffscreenCanvas>();
+
+onMounted(() => {
+  let camera: THREE.PerspectiveCamera;
+  let scene: THREE.Scene;
+  let renderer: THREE.WebGLRenderer;
+  let material: THREE.PointsMaterial;
+
+  let mouseX = 0, mouseY = 0;
+
+  let windowHalfX = window.innerWidth / 2;
+  let windowHalfY = window.innerHeight / 2;
+
+  init();
+  animate();
+
+  function init() {
+    camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 2, 2000);
+    camera.position.z = 1000;
+
+    scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x000000, 0.001);
+
+    const geometry = new THREE.BufferGeometry();
+    const vertices = [];
+
+    const sprite = new THREE.TextureLoader().load('/textures/sprites/disc.png');
+
+    for (let i = 0; i < 10000; i++) {
+      const x = 2000 * Math.random() - 1000;
+      const y = 2000 * Math.random() - 1000;
+      const z = 2000 * Math.random() - 1000;
+      vertices.push(x, y, z);
+    }
+
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    material = new THREE.PointsMaterial({ size: 35, sizeAttenuation: true, map: sprite, alphaTest: 0.5, transparent: true });
+    material.color.setHSL(1.0, 0.3, 0.7);
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    //
+
+    renderer = new THREE.WebGLRenderer({
+      canvas: stageCanvas.value,
+    });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.style.touchAction = 'none';
+    document.body.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('resize', onWindowResize);
+  }
+
+  function onWindowResize() {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  function onPointerMove(event: PointerEvent) {
+    if (event.isPrimary === false) return;
+
+    mouseX = event.clientX - windowHalfX;
+    mouseY = event.clientY - windowHalfY;
+  }
+
+  //
+
+  function animate() {
+    requestAnimationFrame(animate);
+    render();
+  }
+
+  function render() {
+    const time = Date.now() * 0.00005;
+
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (- mouseY - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    const h = (360 * (1.0 + time) % 360) / 360;
+    material.color.setHSL(h, 0.5, 0.5);
+
+    renderer.render(scene, camera);
+  }
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <h1>SeeDoubleYou.dev</h1>
+  <canvas class="stage" ref="stageCanvas"></canvas>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 </style>

@@ -98,6 +98,7 @@ onMounted(() => {
   <h1 class="logo">SeeDoubleYou.dev</h1>
   <div class="dodge" />
   <canvas class="stage" ref="stageCanvas"></canvas>
+  <a class="gitlink" href="https://github.com/SeeDoubleYou">github/SeeDoubleYou</a>
 </template>
 
 <style scoped>
@@ -116,6 +117,7 @@ onMounted(() => {
   left: calc(-1 * (100vh + 100vw));
   bottom: 0;
   right: 0;
+  pointer-events: none;
 
   background: radial-gradient(circle,white,black 45%) center / 15% 30%;
   
@@ -124,19 +126,11 @@ onMounted(() => {
   transform-origin: center center;
 }
 
-@keyframes dodge-area {
-  0%   { transform: translate(0%,   0%) rotate(0deg); }
-  25%  { transform: translate(0%, 50%) rotate(90deg); }
-  50%  { transform: translate(50%, 50%) rotate(180deg); }
-  75%  { transform: translate(50%, 0%) rotate(270deg); }
-  100% { transform: translate(0%,   0%) rotate(359deg); }
-}
-
 .logo {
   font-size: calc(100vw / 10);
 }
 
-h1:before {
+.logo:before {
   content: "SeeDoubleYou.dev";
   position: absolute;
 
@@ -150,6 +144,20 @@ h1:before {
   mix-blend-mode: difference;
   filter: blur(10px);
   animation: diff-area 10s ease-in-out infinite;
+}
+
+.gitlink {
+  position: absolute;
+  bottom: 1em;
+  right: 1.5em;
+}
+
+@keyframes dodge-area {
+  0%   { transform: translate(0%,   0%) rotate(0deg); }
+  25%  { transform: translate(0%, 50%) rotate(90deg); }
+  50%  { transform: translate(50%, 50%) rotate(180deg); }
+  75%  { transform: translate(50%, 0%) rotate(270deg); }
+  100% { transform: translate(0%,   0%) rotate(359deg); }
 }
 
 @keyframes diff-area {

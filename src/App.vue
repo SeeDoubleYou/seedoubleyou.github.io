@@ -95,7 +95,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1>SeeDoubleYou.dev</h1>
+  <h1 class="logo">SeeDoubleYou.dev</h1>
+  <div class="dodge" />
   <canvas class="stage" ref="stageCanvas"></canvas>
 </template>
 
@@ -108,4 +109,54 @@ onMounted(() => {
   height: 100%;
   z-index: -1;
 }
+
+.dodge {
+  position: absolute;
+  top: calc(-1 * (100vh + 100vw));
+  left: calc(-1 * (100vh + 100vw));
+  bottom: 0;
+  right: 0;
+
+  background: radial-gradient(circle,white,black 45%) center / 15% 30%;
+  
+  mix-blend-mode: color-dodge;
+  animation: dodge-area 16s linear infinite;
+  transform-origin: center center;
+}
+
+@keyframes dodge-area {
+  0%   { transform: translate(0%,   0%) rotate(0deg); }
+  25%  { transform: translate(0%, 50%) rotate(90deg); }
+  50%  { transform: translate(50%, 50%) rotate(180deg); }
+  75%  { transform: translate(50%, 0%) rotate(270deg); }
+  100% { transform: translate(0%,   0%) rotate(359deg); }
+}
+
+.logo {
+  font-size: calc(100vw / 10);
+}
+
+h1:before {
+  content: "SeeDoubleYou.dev";
+  position: absolute;
+
+  background: linear-gradient(0deg, rgba(0,0,0,1) 29%, rgba(255,255,255,1) 58%, rgba(255,255,255,1) 61%, rgba(0,0,0,1) 83%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+
+  mix-blend-mode: difference;
+  filter: blur(10px);
+  animation: diff-area 10s ease-in-out infinite;
+}
+
+@keyframes diff-area {
+  0%   { opacity: 0; }
+  25%  { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
 </style>

@@ -1,20 +1,20 @@
-// Settings for the tetrapod swarm on the front page.
+// Settings for the ledwork swarm on the front page.
 // These are all the settings with their default values. Change any of them,
 // or delete lines you don't need: anything left out uses the default.
 // The swarm itself is the prebuilt public/ledwork/ledwork-swarm.min.js.
 
 const swarmConfig: Record<string, any> = {
-  count: 30,              // number of tetrapods (1 to 64)
+  count: 30,              // number of ledworks (1 to 64)
   boxSize: 12,            // edge of the invisible cube they float in (leg length = 1)
   seed: null,             // a number gives the same start every time; null = random
   timescale: 1,           // simulation speed (2 = twice as fast)
   maxPixelRatio: 1.75,    // render resolution cap, lower = faster on big screens
   // Text shown at the bottom until the first drag or tap. false = no hint.
-  hint: 'Drag a loose tetrapod to change its colour \u00b7 drag elsewhere to rotate \u00b7 tap to release',
-  fallback: "Your browser does not support WebGL 2, so the tetrapods can't be shown.",
+  hint: 'Drag a loose ledwork to change its colour \u00b7 drag elsewhere to rotate \u00b7 tap to release',
+  fallback: "Your browser does not support WebGL 2, so the ledworks can't be shown.",
 
   startColour: {
-    // Each tetrapod starts with a random colour picked from these ranges.
+    // Each ledwork starts with a random colour picked from these ranges.
     hue: [0, 360],        // degrees; ignored when `hues` is set
     hues: null,           // e.g. [0, 200, 290]: pick one of these hues instead
     saturation: [0.85, 1],
@@ -22,9 +22,9 @@ const swarmConfig: Record<string, any> = {
   },
 
   drift: {
-    speed: 0.28,          // typical travel speed of a single tetrapod (units / s)
-    spin: 0.16,           // typical tumbling speed of a single tetrapod (rad / s)
-    wander: [0.025, 0.07],// how often the drift direction changes (Hz, random per tetrapod)
+    speed: 0.28,          // typical travel speed of a single ledwork (units / s)
+    spin: 0.16,           // typical tumbling speed of a single ledwork (rad / s)
+    wander: [0.025, 0.07],// how often the drift direction changes (Hz, random per ledwork)
     steer: 0.35,          // how quickly motion follows the drift (1 / s); lower = floatier
   },
 
@@ -33,11 +33,11 @@ const swarmConfig: Record<string, any> = {
     facing: -0.5,         // legs must point at each other at least this much (-1 = head on)
     pullTime: 1.4,        // seconds from first pull to snapped together
     retry: 1.5,           // after a pair can't fit (bodies would overlap), wait this long
-    // After you spin a loose tetrapod, it is extra magnetic for a while.
+    // After you spin a loose ledwork, it is extra magnetic for a while.
     boostTime: 5,         // seconds
     boostRange: 1.6,      // tip-to-tip reach while boosted (instead of range)
     boostFacing: 0.2,     // legs need to face each other less while boosted
-    boostPull: 0.35,      // gentle drift towards the nearest tetrapod while boosted
+    boostPull: 0.35,      // gentle drift towards the nearest ledwork while boosted
     boostPullRange: 4.5,  // ...if it is within this distance
   },
 
@@ -61,21 +61,21 @@ const swarmConfig: Record<string, any> = {
   },
 
   spinColour: {
-    // Dragging a free tetrapod spins it, and spinning shifts its hue,
-    // like the single tetrapod did: about one palette colour per quarter turn.
+    // Dragging a free ledwork spins it, and spinning shifts its hue,
+    // like the single ledwork did: about one palette colour per quarter turn.
     hueDegreesPerQuarterTurn: 51,
     spinDecay: 3.7,       // how quickly it stops spinning after you let go (1 / s)
   },
 
   breathing: {
-    periods: [5.2, 6.1, 4.7, 5.7], // seconds, one per leg (same for every tetrapod)
+    periods: [5.2, 6.1, 4.7, 5.7], // seconds, one per leg (same for every ledwork)
     depth: 0.4,           // brightness swing at activity 80, fraction of the glow
     hue: 60,              // hue sway at activity 80, degrees peak to peak
     holdFade: 0.35,       // time constant (s) for breathing to fade out while you turn it (~1 s to settle)
   },
 
   activity: {
-    // Every tetrapod has an activity level from 0 to 100.
+    // Every ledwork has an activity level from 0 to 100.
     start: [40, 80],      // random starting range
     // Breathing size relative to how it breathes at 80 (0 -> barely, 100 -> a bit more).
     amplitudeAt0: 0.1,
@@ -87,20 +87,20 @@ const swarmConfig: Record<string, any> = {
     // ((activity + soften) / (100 + soften)) ^ influencePower, and the
     // neighbour's odds in the mix are scaled by the ratio of the two. A power
     // above 1 makes high activity count disproportionately: with power 3, a
-    // tetrapod at 100 outweighs one at 70 about 2.6 times and one at 40
+    // ledwork at 100 outweighs one at 70 about 2.6 times and one at 40
     // about 10 times. `soften` keeps 0 from meaning "no say at all".
     soften: 10,
     influencePower: 3,
-    // Optional extra: below 1, a tetrapod also glides more slowly towards
+    // Optional extra: below 1, a ledwork also glides more slowly towards
     // calmer neighbours (scaled by the influence ratio, never below this
     // floor), so a very active one holds its colour much harder. 1 = off.
-    // Tried 0.05: one active tetrapod then turned a whole cluster its colour.
+    // Tried 0.05: one active ledwork then turned a whole cluster its colour.
     calmerListenFloor: 1,
     // On connecting, the less active one rises to halfway between the two
     // (once, not on every re-read), gliding there at this rate (1 / s).
     pullUpRate: 0.8,
     decayPerSecond: 100 / 180, // straight line: 100 -> 0 in about 3 minutes
-    // Turning a loose tetrapod raises activity by gain * angle * (speed / briskSpeed):
+    // Turning a loose ledwork raises activity by gain * angle * (speed / briskSpeed):
     // about 2 to 3 seconds of brisk spinning takes it from 0 to 100.
     spinGain: 5,          // activity per radian at brisk speed
     briskSpeed: 7,        // rad / s

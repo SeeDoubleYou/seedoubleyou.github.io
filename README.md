@@ -1,9 +1,9 @@
 # seedoubleyou.dev
 
-The front page is a full-screen swarm of glowing tetrapods.
+The front page is a full-screen swarm of glowing ledworks.
 
 - **Settings:** `src/swarm-config.ts` lists every setting with its default
-  value (number of tetrapods, speeds, magnet strength, colour mixing, activity
+  value (number of ledworks, speeds, magnet strength, colour mixing, activity
   ranges, start colours, hint text). Change what you like; anything you delete
   uses its default.
 - **The swarm itself** is the prebuilt, minified file

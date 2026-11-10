@@ -1,16 +1,14 @@
-# Vue 3 + TypeScript + Vite
+# seedoubleyou.dev
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The front page is a full-screen swarm of glowing ledworks.
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
-
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
-
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+- **Settings:** `src/swarm-config.ts` lists every setting with its default
+  value (number of ledworks, speeds, magnet strength, colour mixing, activity
+  ranges, start colours, hint text). Change what you like; anything you delete
+  uses its default.
+- **The swarm itself** is the prebuilt, minified file
+  `public/ledwork/ledwork-swarm.min.js`. To update it, rebuild it in the
+  ledworkviz project and copy the new file over this one.
+- **Build:** `npm install`, then `npm run build`. Vite writes the site to `docs/`,
+  which GitHub Pages serves. Commit `docs/` after building.
+- **Develop:** `npm run dev`.

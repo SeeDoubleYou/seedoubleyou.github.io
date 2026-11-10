@@ -1,92 +1,26 @@
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 1);
-  background-color: #242424;
-
+  color-scheme: dark;
+  background-color: #07080b;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  overflow: hidden;
 }
 
-a {
-  font-weight: 500;
-  color: #646464;
-  text-decoration: inherit;
-  transition: color 300ms ease-in-out;
-}
-a:hover {
-  color: #8d8d92;
-}
-
-html {
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-h1 {
-  position: relative;
-  display: block;
-  font-size: 8.2em;
-  line-height: 1.1;
-  text-shadow: -0.05em 0.05em 0px #e74a00, 
-               -0.1em 0.1em 0px #953e1c, 
-               -0.15em 0.15em 0px #522109;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.card {
-  padding: 2em;
-}
-
+html,
+body,
 #app {
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+/* On narrow screens, lift the swarm's hint above the site name. */
+@media (max-width: 760px) {
+  #app .ledwork-swarm .ledwork-hint {
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 32px);
   }
 }

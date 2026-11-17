@@ -9,5 +9,7 @@ interface Window {
   LedworkSwarm?: {
     mount(container: HTMLElement | string, options?: Record<string, any>): LedworkSwarmHandle;
     readonly defaults: Record<string, any>;
+    readonly behaviors: string[];     // available behaviour types
+    readonly environments: string[];  // available environment types
   };
 }

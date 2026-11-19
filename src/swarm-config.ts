@@ -8,8 +8,25 @@
 //   environment  the world they live in: its look, the box, the lighting
 //   behavior     how each ledwork reacts, drifts and mixes colours
 
+// How many ledworks, by screen size: `small` on a phone-sized screen (or
+// smaller), `large` on a large screen (or bigger), and in between it grows
+// with the screen area. Picked once when the page loads.
+const screenCount = {
+  small: 30,
+  large: 100,
+  smallArea: 390 * 844,   // CSS pixels of a typical phone
+  largeArea: 1920 * 1080, // CSS pixels of a large desktop screen
+};
+
+function countForScreen(): number {
+  const c = screenCount;
+  const area = window.innerWidth * window.innerHeight;
+  const t = Math.min(Math.max((area - c.smallArea) / (c.largeArea - c.smallArea), 0), 1);
+  return Math.round(c.small + t * (c.large - c.small));
+}
+
 const swarmConfig: Record<string, any> = {
-  count: 30,              // number of ledworks (1 to 64)
+  count: countForScreen(), // number of ledworks (1 to 1000); see screenCount above
   seed: null,             // a number gives the same start every time; null = random
   timescale: 1,           // simulation speed (2 = twice as fast)
   maxPixelRatio: 1.75,    // render resolution cap, lower = faster on big screens
@@ -32,6 +49,11 @@ const swarmConfig: Record<string, any> = {
   environment: {
     type: 'void',
     boxSize: 12,          // edge of the invisible cube the ledworks float in (leg length = 1)
+    // With more ledworks, the box grows so they stay as spread out as
+    // `growFrom` ledworks are in a box of `boxSize` (each looks smaller on
+    // screen). false = the box stays the same size and gets more crowded.
+    growWithCount: true,
+    growFrom: 30,
     wallStiffness: 1.2,   // how hard the soft walls push back
     glow: 0.012,          // how strongly the space picks up the ledworks' glow
     spacing: 2.7,         // least distance between ledworks when they are placed
